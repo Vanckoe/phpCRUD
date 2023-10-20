@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\post\StoreRequest;
+use App\Http\Requests\post\UpdateRequest;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -34,33 +36,67 @@ class PostsController extends Controller
 
     public function getAll()
     {
+//        SELECT * FROM POST
         return Post::all();
     }
 
     public function getPostById($id)
     {
+//        SELECT * FROM POST WHERE ID = 1
         return Post::find($id);
     }
 
     public function create()
     {
-        $postTags = ["history", "american", "crime"];
+        $postTags = ["Nurkhan", "Abylai", "Islambek"];
         $post = new Post();
-        $post->title = 'Programing';
-        $post->body = 'This post about programming';
-        $post->userId = 1;
-        $post->reactions = 1000;
+        $post->title = 'Users';
+        $post->body = 'This post about programmers';
+        $post->userId = 2;
+        $post->reactions = 20000;
         $post->tags = json_encode($postTags);
-        if ($post->save()) {
+        if (Post::create()) {
             return 'good';
         } else {
             return 'bad';
         }
     }
 
-    public function update(Post $post)
+    public function store(StoreRequest $request)
     {
-        $post->title = "hello";
-        $post->save();
+        $post = $request->validated();
+        if ($post) {
+
+            $tagsAsString = json_encode($post['tags']);
+            $post['tags'] = $tagsAsString;
+
+            $postCreated = Post::create($post);
+            if ($postCreated) {
+                return 'good';
+            } else {
+                return $postCreated->getErrors()->all();
+            }
+        }
+    }
+
+    public function update(UpdateRequest $request, Post $post)
+    {
+        $updatedPost = $request->validated();
+        if ($updatedPost) {
+            $tagsAsString = json_encode($updatedPost['tags']);
+            $updatedPost['tags'] = $tagsAsString;
+            $postUpdated = $post->update($updatedPost);
+            if ($postUpdated) {
+                return 'good';
+            } else {
+                return $postUpdated->getErrors()->all();
+            }
+        }
+    }
+
+    public function getPostByTitle(Request $request)
+    {
+        $title = $request->input('title');
+        return Post::where('title', $title)->get();
     }
 }

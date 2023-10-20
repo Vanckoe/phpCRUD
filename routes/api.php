@@ -50,3 +50,8 @@ Route::get('posts-controller', [PostsController::class, 'index']);
 Route::get('post/{id}', [PostsController::class, 'getPostById']);
 Route::get('post-all', [PostsController::class, 'getAll']);
 Route::post('post-create', [PostsController::class, 'create']);
+Route::put('post-update/{post}', [PostsController::class, 'update']);
+
+//Second lesson laravel
+Route::post('post-store', [PostsController::class, 'store']);
+Route::get('post-by-title', [PostsController::class, 'getPostByTitle']);
