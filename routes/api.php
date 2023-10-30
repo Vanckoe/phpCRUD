@@ -19,10 +19,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/', function (){
+Route::get('/', function () {
     return ['message' => 'Hello World'];
 });
-Route::get('posts', function (){
+Route::get('posts', function () {
     return ['posts' => [
         [
             'id' => 1,
@@ -50,8 +50,18 @@ Route::get('posts-controller', [PostsController::class, 'index']);
 Route::get('post/{id}', [PostsController::class, 'getPostById']);
 Route::get('post-all', [PostsController::class, 'getAll']);
 Route::post('post-create', [PostsController::class, 'create']);
+
 Route::put('post-update/{post}', [PostsController::class, 'update']);
 
 //Second lesson laravel
 Route::post('post-store', [PostsController::class, 'store']);
 Route::get('post-by-title', [PostsController::class, 'getPostByTitle']);
+
+
+Route::post('restore-category', [\App\Http\Controllers\CategoriesController::class, 'restoreCategory']);
+Route::post('store-category', [\App\Http\Controllers\CategoriesController::class, 'store']);
+Route::put('update-category/{category}', [\App\Http\Controllers\CategoriesController::class, 'update']);
+Route::get('categories', [\App\Http\Controllers\CategoriesController::class, 'index']);
+Route::delete('delete-category/{id}', [\App\Http\Controllers\CategoriesController::class, 'delete']);
+Route::get('products-by-category/{id}', [\App\Http\Controllers\CategoriesController::class, 'productsByCategory']);
+Route::get('get-info', [\App\Http\Controllers\CategoriesController::class, 'getInfo']);

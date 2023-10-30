@@ -55,7 +55,7 @@ class PostsController extends Controller
         $post->userId = 2;
         $post->reactions = 20000;
         $post->tags = json_encode($postTags);
-        if (Post::create()) {
+        if ($post->save()) {
             return 'good';
         } else {
             return 'bad';
