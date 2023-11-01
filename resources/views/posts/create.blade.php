@@ -11,22 +11,9 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg navbar-light bg-warning">
-    <div class="container-fluid">
-      <a class="navbar-brand h1" href={{ route('posts.index') }}>CRUDPosts</a>
-      <div class="justify-end ">
-        <div class="col ">
-          <a class="btn btn-sm btn-success" href={{ route('posts.create') }}>Add Post</a>
-        </div>
-      </div>
-    </div>
-  </nav>
-
-
-  // same as the previous file. Add the following after the nav tag and before the closing body tag.
-  <div class="container h-100 mt-5">
-    <div class="row h-100 justify-content-center align-items-center">
-      <div class="col-10 col-md-8 col-lg-6">
+  <div class="fluid">
+    <div class="container">
+      <div class="crud-box">
         <h3>Add a Post</h3>
         <form action="{{ route('posts.store') }}" method="post">
           @csrf
@@ -39,15 +26,46 @@
             <textarea class="form-control" id="body" name="body" rows="3" required></textarea>
           </div>
           <br>
-          <button type="submit" class="btn btn-primary">Create Post</button>
+          <div class="btn-box">
+            <button type="submit" class="btn btn-primary">Create Post</button>
+            <a class="btn btn-primary" href={{ route('posts.index') }}>Check Post</a>
+            <!-- <a class="btn btn-sm btn-success" href={{ route('posts.create') }}>Add Post</a> -->
+
+          </div>
         </form>
       </div>
+
     </div>
   </div>
   <style type="text/css">
-    body{
-      background-color: black;
+    .fluid {
+      width: 100%;
     }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      gap: 20px;
+      width: 60%;
+      height: auto;
+    }
+
+    .crud-box {
+      margin-top: 120px;
+    }
+
+    .btn-box {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 20px;
+    }
+    .form-group{
+      margin-top: 10px;
+    }
+    
   </style>
 </body>
 
