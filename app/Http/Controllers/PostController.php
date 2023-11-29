@@ -1,7 +1,10 @@
 <?php
+
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use App\Models\Post;
+
 class PostController extends Controller
 {
   /**
@@ -12,7 +15,8 @@ class PostController extends Controller
   public function index()
   {
     $posts = Post::all();
-    return view('posts.index', compact('posts'));
+    // return view('posts.index', compact('posts'));
+    return $posts;
   }
   /**
    * Store a newly created resource in storage.
@@ -20,32 +24,33 @@ class PostController extends Controller
    * @param  \Illuminate\Http\Request  $request
    * @return \Illuminate\Http\Response
    */
-//   public function store(Request $request)
-//   {
-//     $request->validate([
-//       'title' => 'required|max:255',
-//       'body' => 'required',
-//     ]);
-//     Post::create($request->all());
-//     return redirect()->route('posts.index')
-//       ->with('success', 'Post created successfully.');
-//   }
+  //   public function store(Request $request)
+  //   {
+  //     $request->validate([
+  //       'title' => 'required|max:255',
+  //       'body' => 'required',
+  //     ]);
+  //     Post::create($request->all());
+  //     return redirect()->route('posts.index')
+  //       ->with('success', 'Post created successfully.');
+  //   }
 
-public function store(Request $request)
-{
+  public function store(Request $request)
+  {
     $request->validate([
-        'title' => 'required|max:255',
-        'body' => 'required',
+      'title' => 'required|max:255',
+      'body' => 'required',
     ]);
-    
+
     $data = $request->all();
     $data['userId'] = auth()->id();  // Set the userId
-    
+
     Post::create($data);
-    
-    return redirect()->route('posts.index')
-        ->with('success', 'Post created successfully.');
-}
+
+    // return redirect()->route('posts.index')
+    //   ->with('success', 'Post created successfully.');
+    return $data;
+  }
 
   /**
    * Update the specified resource in storage.
@@ -62,8 +67,9 @@ public function store(Request $request)
     ]);
     $post = Post::find($id);
     $post->update($request->all());
-    return redirect()->route('posts.index')
-      ->with('success', 'Post updated successfully.');
+    // return redirect()->route('posts.index')
+    //   ->with('success', 'Post updated successfully.');
+    return $post;
   }
   /**
    * Remove the specified resource from storage.
@@ -75,8 +81,9 @@ public function store(Request $request)
   {
     $post = Post::find($id);
     $post->delete();
-    return redirect()->route('posts.index')
-      ->with('success', 'Post deleted successfully');
+    // return redirect()->route('posts.index')
+    //   ->with('success', 'Post deleted successfully');
+    return $post;
   }
   // routes functions
   /**
@@ -97,7 +104,8 @@ public function store(Request $request)
   public function show($id)
   {
     $post = Post::find($id);
-    return view('posts.show', compact('post'));
+    // return view('posts.show', compact('post'));
+    return $post;
   }
   /**
    * Show the form for editing the specified post.
@@ -108,7 +116,8 @@ public function store(Request $request)
   public function edit($id)
   {
     $post = Post::find($id);
-    return view('posts.edit', compact('post'));
+    // return view('posts.edit', compact('post'));
+    return $post;
   }
 }
 
